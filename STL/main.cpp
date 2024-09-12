@@ -103,7 +103,7 @@ void main()
 #endif // STL_LIST
 }
 
-// Функция для безопасного получения корректного индекса от пользователя
+// Получения корректного индекса от пользователя
 int get_valid_index(int max_size, const std::string& action, bool allow_equal)
 {
     int index;
