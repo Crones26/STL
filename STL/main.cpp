@@ -55,7 +55,7 @@ void main()
     vector_info(vec);
 
     // Вставка в вектор
-    int index = get_valid_index(vec.size(), "вставки", true);  // Проверка корректности индекса для вставки
+    int index = get_valid_index(vec.size(), "вставка", true);  // Проверка корректности индекса для вставки
     int value;
     cout << "Введите значение для вставки в вектор: ";
     cin >> value;
@@ -66,7 +66,7 @@ void main()
     vector_info(vec);
 
     // Удаление из вектора
-    index = get_valid_index(vec.size(), "удаления");  // Проверка корректности индекса для удаления
+    index = get_valid_index(vec.size(), "удаление");  // Проверка корректности индекса для удаления
     remove_at_index(vec, index);
     cout << "Вектор после удаления: " << endl;
     for (int i : vec) cout << i << tab;
@@ -83,7 +83,7 @@ void main()
     list_info(lst);
 
     // Вставка в список
-    int index = get_valid_index(lst.size(), "вставки", true);  // Проверка корректности индекса для вставки
+    int index = get_valid_index(lst.size(), "вставка", true);  // Проверка корректности индекса для вставки
     int value;
     cout << "Введите значение для вставки в список: ";
     cin >> value;
@@ -94,7 +94,7 @@ void main()
     list_info(lst);
 
     // Удаление из списка
-    index = get_valid_index(lst.size(), "удаления");  // Проверка корректности индекса для удаления
+    index = get_valid_index(lst.size(), "удаление");  // Проверка корректности индекса для удаления
     remove_at_index(lst, index);
     cout << "Список после удаления: " << endl;
     for (int i : lst) cout << i << tab;
