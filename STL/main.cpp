@@ -38,7 +38,7 @@ void main()
         cout << arr[i] << tab;
     }
     cout << endl;
-
+    
 #endif // STL_ARRAY
 
 #ifdef STL_VECTOR
