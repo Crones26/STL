@@ -167,5 +167,5 @@ void remove_at_index(std::list<int>& lst, int index)
     {
         cout << "ОШИБКА: Некорректный индекс для удаления!" << endl;
     }
-
+    
 }
