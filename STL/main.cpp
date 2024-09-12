@@ -54,18 +54,15 @@ void main()
     vector_info(vec);
 
     int index, value;
-    cout << "Введите индекс для вставки в вектор: ";
-    cin >> index;
-    cout << "Введите значение для вставки в вектор: ";
-    cin >> value;
+    cout << "Введите индекс для вставки в вектор: "; cin >> index;
+    cout << "Введите значение для вставки в вектор: "; cin >> value;
     insert_at_index(vec, index, value);
     cout << "Вектор после вставки: " << endl;
     for (int i : vec) cout << i << tab;
     cout << endl;
     vector_info(vec);
 
-    cout << "Введите индекс для удаления из вектора: ";
-    cin >> index;
+    cout << "Введите индекс для удаления из вектора: "; cin >> index;
     remove_at_index(vec, index);
     cout << "Вектор после удаления: " << endl;
     for (int i : vec) cout << i << tab;
@@ -83,10 +80,8 @@ void main()
 
     // Вставка в список
     int index, value;
-    cout << "Введите индекс для вставки в список: ";
-    cin >> index;
-    cout << "Введите значение для вставки в список: ";
-    cin >> value;
+    cout << "Введите индекс для вставки в список: "; cin >> index;
+    cout << "Введите значение для вставки в список: "; cin >> value;
     insert_at_index(lst, index, value);
     cout << "Список после вставки: " << endl;
     for (int i : lst) cout << i << tab;
@@ -94,8 +89,7 @@ void main()
     list_info(lst);
 
     // Удаление из списка
-    cout << "Введите индекс для удаления из списка: ";
-    cin >> index;
+    cout << "Введите индекс для удаления из списка: "; cin >> index;
     remove_at_index(lst, index);
     cout << "Список после удаления: " << endl;
     for (int i : lst) cout << i << tab;
