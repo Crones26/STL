@@ -81,6 +81,7 @@ void main()
     cout << endl;
     list_info(lst);
 
+    // Вставка в список
     int index, value;
     cout << "Введите индекс для вставки в список: ";
     cin >> index;
@@ -92,6 +93,7 @@ void main()
     cout << endl;
     list_info(lst);
 
+    // Удаление из списка
     cout << "Введите индекс для удаления из списка: ";
     cin >> index;
     remove_at_index(lst, index);
