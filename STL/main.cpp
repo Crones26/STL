@@ -57,20 +57,17 @@ void main()
     // Вставка в вектор
     int index = get_valid_index(vec.size(), "вставка", true);  // Проверка корректности индекса для вставки
     int value;
-    cout << "Введите значение для вставки в вектор: ";
-    cin >> value;
+    cout << "Введите значение для вставки в вектор: "; cin >> value;
     insert_at_index(vec, index, value);
     cout << "Вектор после вставки: " << endl;
-    for (int i : vec) cout << i << tab;
-    cout << endl;
+    for (int i : vec) cout << i << tab; cout << endl;
     vector_info(vec);
 
     // Удаление из вектора
     index = get_valid_index(vec.size(), "удаление");  // Проверка корректности индекса для удаления
     remove_at_index(vec, index);
     cout << "Вектор после удаления: " << endl;
-    for (int i : vec) cout << i << tab;
-    cout << endl;
+    for (int i : vec) cout << i << tab; cout << endl;
     vector_info(vec);
 #endif // STL_VECTOR
 
@@ -85,20 +82,17 @@ void main()
     // Вставка в список
     int index = get_valid_index(lst.size(), "вставка", true);  // Проверка корректности индекса для вставки
     int value;
-    cout << "Введите значение для вставки в список: ";
-    cin >> value;
+    cout << "Введите значение для вставки в список: "; cin >> value;
     insert_at_index(lst, index, value);
     cout << "Список после вставки: " << endl;
-    for (int i : lst) cout << i << tab;
-    cout << endl;
+    for (int i : lst) cout << i << tab; cout << endl;
     list_info(lst);
 
     // Удаление из списка
     index = get_valid_index(lst.size(), "удаление");  // Проверка корректности индекса для удаления
     remove_at_index(lst, index);
     cout << "Список после удаления: " << endl;
-    for (int i : lst) cout << i << tab;
-    cout << endl;
+    for (int i : lst) cout << i << tab; cout << endl;
     list_info(lst);
 #endif // STL_LIST
 }
