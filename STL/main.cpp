@@ -10,8 +10,8 @@ using std::endl;
 #define delimiter "\n----------------------------------\n"
 
 //#define STL_ARRAY
-//#define STL_VECTOR
-#define STL_LIST
+#define STL_VECTOR
+//#define STL_LIST
 
 template<typename T> void vector_info(const std::vector<T>& vec);
 template<typename T> void list_info(const std::list<T>& lst);
@@ -48,7 +48,8 @@ void main()
     cout << "Исходный вектор: " << endl;
     for (int i = 0; i < vec.size(); i++)
     {
-        cout << vec[i] << tab;
+        cout << vec.at(i) << tab;
+        //cout << vec[i] << tab;
     }
     cout << endl;
     vector_info(vec);
@@ -58,15 +59,13 @@ void main()
     cout << "Введите значение для вставки в вектор: "; cin >> value;
     insert_at_index(vec, index, value);
     cout << "Вектор после вставки: " << endl;
-    for (int i : vec) cout << i << tab;
-    cout << endl;
+    for (int i : vec) cout << i << tab;cout << endl;
     vector_info(vec);
 
     cout << "Введите индекс для удаления из вектора: "; cin >> index;
     remove_at_index(vec, index);
     cout << "Вектор после удаления: " << endl;
-    for (int i : vec) cout << i << tab;
-    cout << endl;
+    for (int i : vec) cout << i << tab;cout << endl;
     vector_info(vec);
 #endif // STL_VECTOR
 
@@ -74,8 +73,7 @@ void main()
     // list - это контейнер, который хранит данные в виде двусвязного списка.
     std::list<int> lst = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 };
     cout << "Исходный список: " << endl;
-    for (int i : lst) cout << i << tab;
-    cout << endl;
+    for (int i : lst) cout << i << tab;cout << endl;
     list_info(lst);
 
     // Вставка в список
@@ -84,16 +82,14 @@ void main()
     cout << "Введите значение для вставки в список: "; cin >> value;
     insert_at_index(lst, index, value);
     cout << "Список после вставки: " << endl;
-    for (int i : lst) cout << i << tab;
-    cout << endl;
+    for (int i : lst) cout << i << tab;cout << endl;
     list_info(lst);
 
     // Удаление из списка
     cout << "Введите индекс для удаления из списка: "; cin >> index;
     remove_at_index(lst, index);
     cout << "Список после удаления: " << endl;
-    for (int i : lst) cout << i << tab;
-    cout << endl;
+    for (int i : lst) cout << i << tab;cout << endl;
     list_info(lst);
 #endif // STL_LIST
 
