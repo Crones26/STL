@@ -50,7 +50,7 @@ void main()
     addViolation(trafficDatabase, "К666РС77", "Превышение скорости");
     addViolation(trafficDatabase, "Т777УВ77", "Проезд на запрещающий сигнал светофора");
     addViolation(trafficDatabase, "Т777УВ77", "Превышение скорости");
-
+    
     // Вывод всех автомобилей и их нарушений
     std::cout << delimiter << "Вывод всех автомобилей и их правонарушений:" << std::endl;
     for (const std::pair<const std::string, std::vector<std::string>>& entry : trafficDatabase)
