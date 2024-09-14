@@ -19,7 +19,8 @@ void main()
     // Используем std::map для хранения номера автомобиля и списка правонарушений
     std::map<string, vector<string>> trafficDatabase;
     // Добавляем квитанции (если номер автомобиля новый, создаётся новый узел)
-    auto addViolation = [](std::map<string, vector<string>>& db, const string& plate, const string& violation) {
+    auto addViolation = [](std::map<string, vector<string>>& db, const string& plate, const string& violation)
+        {
         // Если номер автомобиля уже есть в базе, добавляем правонарушение к существующему списку
         if (db.find(plate) != db.end())
         {
