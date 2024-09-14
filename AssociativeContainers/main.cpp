@@ -12,7 +12,7 @@ using std::string;
 #define tab "\t"
 #define delimiter "\n-------------------------------------\n"
 
-int main()
+void main()
 {
     setlocale(LC_ALL, "");
 
@@ -80,5 +80,4 @@ int main()
         }
     }
 
-    return 0;
 }
