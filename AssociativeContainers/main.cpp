@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<map>
 #include<vector>
 #include<string>
@@ -14,65 +14,65 @@ void main()
 {
     setlocale(LC_ALL, "");
 
-    // Используем std::map для хранения номера автомобиля и списка правонарушений
+    // РСЃРїРѕР»СЊР·СѓРµРј std::map РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РЅРѕРјРµСЂР° Р°РІС‚РѕРјРѕР±РёР»СЏ Рё СЃРїРёСЃРєР° РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёР№
     std::map<std::string, std::vector<std::string>> trafficDatabase;
 
-    // Добавляем квитанции (если номер автомобиля новый, создаётся новый узел)
+    // Р”РѕР±Р°РІР»СЏРµРј РєРІРёС‚Р°РЅС†РёРё (РµСЃР»Рё РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ РЅРѕРІС‹Р№, СЃРѕР·РґР°С‘С‚СЃСЏ РЅРѕРІС‹Р№ СѓР·РµР»)
     void (*addViolation)(std::map<std::string, std::vector<std::string>>&db, const std::string & plate, const std::string & violation) =
         [](std::map<std::string, std::vector<std::string>>& datab, const std::string& plate, const std::string& violation)
         {
-            // Если номер автомобиля уже есть в базе, добавляем правонарушение к существующему списку
+            // Р•СЃР»Рё РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ СѓР¶Рµ РµСЃС‚СЊ РІ Р±Р°Р·Рµ, РґРѕР±Р°РІР»СЏРµРј РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ Рє СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРјСѓ СЃРїРёСЃРєСѓ
             if (datab.find(plate) != datab.end())
             {
                 datab[plate].push_back(violation);
             }
             else
             {
-                // Если номера нет, создаём новый узел с этим номером и добавляем правонарушение
+                // Р•СЃР»Рё РЅРѕРјРµСЂР° РЅРµС‚, СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СѓР·РµР» СЃ СЌС‚РёРј РЅРѕРјРµСЂРѕРј Рё РґРѕР±Р°РІР»СЏРµРј РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ
                 datab[plate] = std::vector<std::string>{ violation };
             }
         };
 
-    addViolation(trafficDatabase, "А123ВС77", "Превышение скорости");
-    addViolation(trafficDatabase, "А123ВС77", "Неправильная парковка");
-    addViolation(trafficDatabase, "Х987УЗ99", "Проезд на красный свет");
-    addViolation(trafficDatabase, "М456ЛМ50", "Отсутствие ремня безопасности");
-    addViolation(trafficDatabase, "Р111КХ23", "Разговор по телефону за рулём");
-    addViolation(trafficDatabase, "Р111КХ23", "Превышение скорости");
-    addViolation(trafficDatabase, "Д222ЕФ77", "Нарушение правил парковки");
-    addViolation(trafficDatabase, "Г333ИЙ33", "Проезд на красный свет");
-    addViolation(trafficDatabase, "Г333ИЙ33", "Неправильная парковка");
-    addViolation(trafficDatabase, "Г333ИЙ33", "Отсутствие страховки");
-    addViolation(trafficDatabase, "Й444КЛ77", "Превышение скорости");
-    addViolation(trafficDatabase, "Й444КЛ77", "Разговор по телефону за рулём");
-    addViolation(trafficDatabase, "М555НО99", "Нарушение правил обгона");
-    addViolation(trafficDatabase, "К666РС77", "Отсутствие ремня безопасности");
-    addViolation(trafficDatabase, "К666РС77", "Превышение скорости");
-    addViolation(trafficDatabase, "Т777УВ77", "Проезд на запрещающий сигнал светофора");
-    addViolation(trafficDatabase, "Т777УВ77", "Превышение скорости");
+    addViolation(trafficDatabase, "Рђ123Р’РЎ77", "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Рђ123Р’РЎ77", "РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РїР°СЂРєРѕРІРєР°");
+    addViolation(trafficDatabase, "РҐ987РЈР—99", "РџСЂРѕРµР·Рґ РЅР° РєСЂР°СЃРЅС‹Р№ СЃРІРµС‚");
+    addViolation(trafficDatabase, "Рњ456Р›Рњ50", "РћС‚СЃСѓС‚СЃС‚РІРёРµ СЂРµРјРЅСЏ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Р 111РљРҐ23", "Р Р°Р·РіРѕРІРѕСЂ РїРѕ С‚РµР»РµС„РѕРЅСѓ Р·Р° СЂСѓР»С‘Рј");
+    addViolation(trafficDatabase, "Р 111РљРҐ23", "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Р”222Р•Р¤77", "РќР°СЂСѓС€РµРЅРёРµ РїСЂР°РІРёР» РїР°СЂРєРѕРІРєРё");
+    addViolation(trafficDatabase, "Р“333РР™33", "РџСЂРѕРµР·Рґ РЅР° РєСЂР°СЃРЅС‹Р№ СЃРІРµС‚");
+    addViolation(trafficDatabase, "Р“333РР™33", "РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РїР°СЂРєРѕРІРєР°");
+    addViolation(trafficDatabase, "Р“333РР™33", "РћС‚СЃСѓС‚СЃС‚РІРёРµ СЃС‚СЂР°С…РѕРІРєРё");
+    addViolation(trafficDatabase, "Р™444РљР›77", "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Р™444РљР›77", "Р Р°Р·РіРѕРІРѕСЂ РїРѕ С‚РµР»РµС„РѕРЅСѓ Р·Р° СЂСѓР»С‘Рј");
+    addViolation(trafficDatabase, "Рњ555РќРћ99", "РќР°СЂСѓС€РµРЅРёРµ РїСЂР°РІРёР» РѕР±РіРѕРЅР°");
+    addViolation(trafficDatabase, "Рљ666Р РЎ77", "РћС‚СЃСѓС‚СЃС‚РІРёРµ СЂРµРјРЅСЏ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Рљ666Р РЎ77", "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё");
+    addViolation(trafficDatabase, "Рў777РЈР’77", "РџСЂРѕРµР·Рґ РЅР° Р·Р°РїСЂРµС‰Р°СЋС‰РёР№ СЃРёРіРЅР°Р» СЃРІРµС‚РѕС„РѕСЂР°");
+    addViolation(trafficDatabase, "Рў777РЈР’77", "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё");
     
-    // Вывод всех автомобилей и их нарушений
-    std::cout << delimiter << "Вывод всех автомобилей и их правонарушений:" << std::endl;
+    // Р’С‹РІРѕРґ РІСЃРµС… Р°РІС‚РѕРјРѕР±РёР»РµР№ Рё РёС… РЅР°СЂСѓС€РµРЅРёР№
+    std::cout << delimiter << "Р’С‹РІРѕРґ РІСЃРµС… Р°РІС‚РѕРјРѕР±РёР»РµР№ Рё РёС… РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёР№:" << std::endl;
     for (const std::pair<const std::string, std::vector<std::string>>& entry : trafficDatabase)
     {
-        std::cout << "Автомобиль с номером: " << entry.first << std::endl;
+        std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј: " << entry.first << std::endl;
         for (const std::string& violation : entry.second)
         {
-            std::cout << tab << "Нарушение: " << violation << std::endl;
+            std::cout << tab << "РќР°СЂСѓС€РµРЅРёРµ: " << violation << std::endl;
         }
     }
 
-    // Поиск и вывод информации по конкретным автомобилям
-    std::cout << delimiter << "Результаты поиска:" << std::endl;
+    // РџРѕРёСЃРє Рё РІС‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё РїРѕ РєРѕРЅРєСЂРµС‚РЅС‹Рј Р°РІС‚РѕРјРѕР±РёР»СЏРј
+    std::cout << delimiter << "Р РµР·СѓР»СЊС‚Р°С‚С‹ РїРѕРёСЃРєР°:" << std::endl;
 
-    std::string platesToSearch[] = { "А123ВС77", "М456ЛМ50", "Р678КХ23", "Т777УВ77", "Д222ЕФ77", "Д222ЕФ79" };
+    std::string platesToSearch[] = { "Рђ123Р’РЎ77", "Рњ456Р›Рњ50", "Р 678РљРҐ23", "Рў777РЈР’77", "Р”222Р•Р¤77", "Р”222Р•Р¤79" };
 
     for (const std::string& plate : platesToSearch)
     {
         std::map<std::string, std::vector<std::string>>::iterator it = trafficDatabase.find(plate);
         if (it != trafficDatabase.end())
         {
-            std::cout << "Автомобиль с номером " << plate << " имеет следующие правонарушения:" << std::endl;
+            std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј " << plate << " РёРјРµРµС‚ СЃР»РµРґСѓСЋС‰РёРµ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ:" << std::endl;
             for (const std::string& violation : it->second)
             {
                 std::cout << "- " << violation << std::endl;
@@ -80,7 +80,7 @@ void main()
         }
         else
         {
-            std::cout << "Автомобиль с номером " << plate << " не найден." << std::endl;
+            std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј " << plate << " РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
         }
     }
 }
