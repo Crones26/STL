@@ -1,0 +1,2 @@
+addViolation(trafficDatabase, "К666РС77", "Без ремня безопасности");
+addViolation(trafficDatabase, "А123ВС77", "123");
