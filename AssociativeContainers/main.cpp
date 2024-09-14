@@ -16,8 +16,10 @@ void main()
 
     // Используем std::map для хранения номера автомобиля и списка правонарушений
     std::map<std::string, std::vector<std::string>> trafficDatabase;
+
     // Добавляем квитанции (если номер автомобиля новый, создаётся новый узел)
-    auto addViolation = [](std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& violation)
+    void (*addViolation)(std::map<std::string, std::vector<std::string>>&db, const std::string & plate, const std::string & violation) =
+        [](std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& violation)
         {
             // Если номер автомобиля уже есть в базе, добавляем правонарушение к существующему списку
             if (db.find(plate) != db.end())
@@ -51,10 +53,10 @@ void main()
 
     // Вывод всех автомобилей и их нарушений
     std::cout << delimiter << "Вывод всех автомобилей и их правонарушений:" << std::endl;
-    for (const auto& entry : trafficDatabase)
+    for (const std::pair<const std::string, std::vector<std::string>>& entry : trafficDatabase)
     {
         std::cout << "Автомобиль с номером: " << entry.first << std::endl;
-        for (const auto& violation : entry.second)
+        for (const std::string& violation : entry.second)
         {
             std::cout << tab << "Нарушение: " << violation << std::endl;
         }
@@ -65,13 +67,13 @@ void main()
 
     std::string platesToSearch[] = { "А123ВС77", "М456ЛМ50", "Р678КХ23", "Т777УВ77", "Д222ЕФ77", "Д222ЕФ79" };
 
-    for (const auto& plate : platesToSearch)
+    for (const std::string& plate : platesToSearch)
     {
-        auto it = trafficDatabase.find(plate);
+        std::map<std::string, std::vector<std::string>>::iterator it = trafficDatabase.find(plate);
         if (it != trafficDatabase.end())
         {
             std::cout << "Автомобиль с номером " << plate << " имеет следующие правонарушения:" << std::endl;
-            for (const auto& violation : it->second)
+            for (const std::string& violation : it->second)
             {
                 std::cout << "- " << violation << std::endl;
             }
@@ -81,5 +83,4 @@ void main()
             std::cout << "Автомобиль с номером " << plate << " не найден." << std::endl;
         }
     }
-
 }
