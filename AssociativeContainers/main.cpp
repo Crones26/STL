@@ -19,17 +19,17 @@ void main()
 
     // ƒобавл€ем квитанции (если номер автомобил€ новый, создаЄтс€ новый узел)
     void (*addViolation)(std::map<std::string, std::vector<std::string>>&db, const std::string & plate, const std::string & violation) =
-        [](std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& violation)
+        [](std::map<std::string, std::vector<std::string>>& datab, const std::string& plate, const std::string& violation)
         {
             // ≈сли номер автомобил€ уже есть в базе, добавл€ем правонарушение к существующему списку
-            if (db.find(plate) != db.end())
+            if (datab.find(plate) != datab.end())
             {
-                db[plate].push_back(violation);
+                datab[plate].push_back(violation);
             }
             else
             {
                 // ≈сли номера нет, создаЄм новый узел с этим номером и добавл€ем правонарушение
-                db[plate] = std::vector<std::string>{ violation };
+                datab[plate] = std::vector<std::string>{ violation };
             }
         };
 
