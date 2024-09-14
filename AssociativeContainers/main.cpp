@@ -1,141 +1,72 @@
 #include<iostream>
 #include<map>
 #include<vector>
-#include<iostream>
-#include<map>
-#include<vector>
 #include<string>
 #include<fstream>
+#include<cstdlib>
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::vector;
 using std::string;
-using std::ofstream;
 using std::ifstream;
+using std::ofstream;
 
 #define tab "\t"
 #define delimiter "\n-------------------------------------\n"
 
-// Функция для сохранения нового правонарушения в файл
-void saveViolationToFile(const string& plate, const string& violation) {
-    ofstream outfile("violations.txt", std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "addViolation(trafficDatabase, \"" << plate << "\", \"" << violation << "\");\n";
-        outfile.close();
-    }
-    else {
-        cout << "Ошибка открытия файла для записи." << endl;
-    }
-}
-// Функция для загрузки нарушений из файла
-void loadViolationsFromFile(std::map<string, vector<string>>& trafficDatabase) {
-    ifstream infile("violations.txt");
-    if (infile.is_open()) {
-        string plate, violation, line;
-        while (getline(infile, line)) {
-            size_t pos1 = line.find("\"");
-            size_t pos2 = line.find("\"", pos1 + 1);
-            plate = line.substr(pos1 + 1, pos2 - pos1 - 1);
-            pos1 = line.find("\"", pos2 + 1);
-            pos2 = line.find("\"", pos1 + 1);
-            violation = line.substr(pos1 + 1, pos2 - pos1 - 1);
-            trafficDatabase[plate].push_back(violation);
-        }
-        infile.close();
-    }
-    else {
-        // Создаём файл с начальными данными, если его нет
-        ofstream outfile("violations.txt");
-        if (outfile.is_open()) 
-        {
-            outfile << "addViolation(trafficDatabase, \"А123ВС77\", \"Превышение скорости\");\n";
-            outfile << "addViolation(trafficDatabase, \"А123ВС77\", \"Неправильная парковка\");\n";
-            outfile << "addViolation(trafficDatabase, \"Х987УЗ99\", \"Проезд на красный свет\");\n";
-            outfile << "addViolation(trafficDatabase, \"М456ЛМ50\", \"Отсутствие ремня безопасности\");\n";
-            outfile << "addViolation(trafficDatabase, \"Р111КХ23\", \"Разговор по телефону за рулём\");\n";
-            outfile << "addViolation(trafficDatabase, \"Р111КХ23\", \"Превышение скорости\");\n";
-            outfile << "addViolation(trafficDatabase, \"Д222ЕФ77\", \"Нарушение правил парковки\");\n";
-            outfile << "addViolation(trafficDatabase, \"Г333ИЙ33\", \"Проезд на красный свет\");\n";
-            outfile << "addViolation(trafficDatabase, \"Г333ИЙ33\", \"Неправильная парковка\");\n";
-            outfile << "addViolation(trafficDatabase, \"Г333ИЙ33\", \"Отсутствие страховки\");\n";
-            outfile << "addViolation(trafficDatabase, \"Й444КЛ77\", \"Превышение скорости\");\n";
-            outfile << "addViolation(trafficDatabase, \"Й444КЛ77\", \"Разговор по телефону за рулём\");\n";
-            outfile << "addViolation(trafficDatabase, \"М555НО99\", \"Нарушение правил обгона\");\n";
-            outfile << "addViolation(trafficDatabase, \"К666РС77\", \"Отсутствие ремня безопасности\");\n";
-            outfile << "addViolation(trafficDatabase, \"К666РС77\", \"Превышение скорости\");\n";
-            outfile << "addViolation(trafficDatabase, \"Т777УВ77\", \"Проезд на запрещающий сигнал светофора\");\n";
-            outfile << "addViolation(trafficDatabase, \"Т777УВ77\", \"Превышение скорости\");\n";
-            outfile.close();
-        }
-    }
-}
-void main()
-{
-    setlocale(LC_ALL, "Russian");
-
-    // Используем std::map для хранения номера автомобиля и списка правонарушений
-    std::map<string, vector<string>> trafficDatabase;
-
-    // Функция для добавления нарушений
-    auto addViolation = [](std::map<string, vector<string>>& db, const string& plate, const string& violation) {
-        db[plate].push_back(violation);
-        };
-
-    // Загружаем данные из файла при запуске программы
-    loadViolationsFromFile(trafficDatabase);
-
-    // Бесконечный цикл для ввода данных с клавиатуры
-    while (true)
+// Функция для загрузки данных из файла
+void loadDatabase(std::map<string, vector<string>>& db, const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open())
     {
-        string plate, violation;
-        char choice;
-
-        // Ввод номера автомобиля
-        cout << "Введите номер автомобиля (или 'exit' для выхода): ";
-        cin >> plate;
-
-        if (plate == "exit")
-        {
-            break;  // Если пользователь вводит "exit", программа завершает ввод
-        }
-
-        // Проверка, существует ли номер в базе
-        if (trafficDatabase.find(plate) != trafficDatabase.end()) {
-            // Если номер найден, выводим все существующие правонарушения
-            cout << "Автомобиль с номером " << plate << " имеет следующие правонарушения:" << endl;
-            for (const auto& violation : trafficDatabase[plate]) {
-                cout << "- " << violation << endl;
-            }
-        }
-        else {
-            // Если номер не найден, создаём новую запись
-            cout << "Автомобиль с номером " << plate << " не найден. Будет создана новая запись." << endl;
-        }
-
-        // Ввод нового правонарушения
-        cout << "Введите правонарушение для автомобиля " << plate << ": ";
-        cin.ignore();  // Игнорируем символ новой строки после ввода номера
-        getline(cin, violation);
-
-        // Добавляем данные в базу
-        addViolation(trafficDatabase, plate, violation);
-        saveViolationToFile(plate, violation);  // Сохраняем в файл
-
-        // Спрашиваем пользователя, хочет ли он добавить ещё одно правонарушение
-        cout << "Хотите добавить еще одно правонарушение? (y/n): ";
-        cin >> choice;
-
-        if (choice == 'n' || choice == 'N')
-        {
-            break;  // Выход из цикла, если пользователь выбрал 'n'
-        }
+        cout << "Не удалось открыть файл для чтения." << endl;
+        return;
     }
 
-    // Вывод всех автомобилей и их нарушений
-    cout << delimiter << "Вывод всех автомобилей и их правонарушений:" << endl;
-    for (const auto& entry : trafficDatabase)
+    string plate, violation;
+    while (getline(file, plate))
+    {
+        vector<string> violations;
+        while (getline(file, violation) && violation != "---")
+        {
+            violations.push_back(violation);
+        }
+        db[plate] = violations;
+    }
+
+    file.close();
+}
+// Функция для сохранения данных в файл
+void saveDatabase(const std::map<string, vector<string>>& db, const string& filename) {
+    ofstream file(filename);
+    if (!file.is_open())
+    {
+        cout << "Не удалось открыть файл для записи." << endl;
+        return;
+    }
+    for (const auto& entry : db)
+    {
+        file << entry.first << endl;
+        for (const auto& violation : entry.second)
+        {
+            file << violation << endl;
+        }
+        file << "---" << endl; // Разделитель для каждого автомобиля
+    }
+    file.close();
+}
+// Функция для вывода всех данных
+void printDatabase(const std::map<string, vector<string>>& db)
+{
+    if (db.empty())
+    {
+        cout << "База данных пуста." << endl;
+        return;
+    }
+    cout << delimiter << "Все данные в базе нарушений:" << endl;
+    for (const auto& entry : db)
     {
         cout << "Автомобиль с номером: " << entry.first << endl;
         for (const auto& violation : entry.second)
@@ -143,5 +74,149 @@ void main()
             cout << tab << "Нарушение: " << violation << endl;
         }
     }
+}
+// Функция для открытия файла
+void openFile(const string& filename) {
+    // Открываем файл с использованием системной команды в зависимости от ОС
+#ifdef _WIN32
+    system(("start " + filename).c_str());
+#elif __APPLE__
+    system(("open " + filename).c_str());
+#elif __linux__
+    system(("xdg-open " + filename).c_str());
+#else
+    cout << "Открытие файла не поддерживается на этой ОС." << endl;
+#endif
+}
+// Функция для удаления правонарушения по номеру автомобиля
+void removeViolation(std::map<string, vector<string>>& db, const string& plate, const string& filename) {
+    auto it = db.find(plate);
+    if (it != db.end())
+    {
+        cout << "Список правонарушений для автомобиля с номером " << plate << ":" << endl;
+        for (size_t i = 0; i < it->second.size(); ++i)
+        {
+            cout << i + 1 << ". " << it->second[i] << endl;
+        }
 
+        cout << "Введите номер правонарушения, которое хотите удалить: ";
+        size_t index;
+        cin >> index;
+
+        if (index > 0 && index <= it->second.size())
+        {
+            it->second.erase(it->second.begin() + index - 1); // Удаление выбранного нарушения
+            if (it->second.empty())
+            {
+                db.erase(it); // Если больше нет нарушений, удаляем запись об автомобиле
+            }
+            saveDatabase(db, filename); // Сохраняем изменения
+            cout << "Правонарушение удалено и база данных обновлена." << endl;
+        }
+        else
+        {
+            cout << "Неверный индекс. Попробуйте снова." << endl;
+        }
+    }
+    else
+    {
+        cout << "Автомобиль с номером " << plate << " не найден." << endl;
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "");
+
+    std::map<string, vector<string>> trafficDatabase;
+    string filename = "traffic_database.txt";
+    loadDatabase(trafficDatabase, filename);
+
+    auto addViolation = [](std::map<string, vector<string>>& db, const string& plate, const string& violation, const string& filename)
+        {
+        if (db.find(plate) != db.end())
+        {
+            db[plate].push_back(violation);
+        }
+        else
+        {
+            db[plate] = vector<string>{ violation };
+        }
+        saveDatabase(db, filename); // Автосохранение после добавления
+        };
+
+    int choice = 0;
+
+    while (true)
+    {
+        cout << delimiter;
+        cout << "Выберите действие:\n";
+        cout << "1. Добавить правонарушение\n";
+        cout << "2. Проверить правонарушения по номеру автомобиля\n";
+        cout << "3. Открыть и просмотреть все сохранённые данные\n";
+        cout << "4. Удалить правонарушение\n";
+        cout << "5. Открыть файл с нарушениями\n";
+        cout << "6. Сохранить данные и выйти\n";
+        cout << "Ваш выбор: ";
+        cin >> choice;
+
+        if (choice == 1)
+        {
+            string plate, violation;
+            cout << "Введите номер автомобиля: ";
+            cin >> plate;
+
+            cout << "Введите правонарушение: ";
+            cin.ignore();
+            getline(cin, violation);
+
+            addViolation(trafficDatabase, plate, violation, filename);
+            cout << "Данные добавлены и сохранены!" << endl;
+        }
+        else if (choice == 2)
+        {
+            string searchPlate;
+            cout << "Введите номер автомобиля для поиска: ";
+            cin >> searchPlate;
+
+            auto it = trafficDatabase.find(searchPlate);
+            if (it != trafficDatabase.end())
+            {
+                cout << "Автомобиль с номером " << searchPlate << " имеет следующие правонарушения:" << endl;
+                for (const auto& violation : it->second) 
+                {
+                    cout << "- " << violation << endl;
+                }
+            }
+            else
+            {
+                cout << "Автомобиль с номером " << searchPlate << " не найден." << endl;
+            }
+        }
+        else if (choice == 3)
+        {
+            printDatabase(trafficDatabase);
+        }
+        else if (choice == 4)
+        {
+            string plate;
+            cout << "Введите номер автомобиля, для которого нужно удалить правонарушение: ";
+            cin >> plate;
+
+            removeViolation(trafficDatabase, plate, filename);
+        }
+        else if (choice == 5)
+        {
+            openFile(filename);
+        }
+        else if (choice == 6)
+        {
+            saveDatabase(trafficDatabase, filename);
+            cout << "Данные сохранены. Выход из программы." << endl;
+            break;
+        }
+        else
+        {
+            cout << "Неверный выбор. Попробуйте снова." << endl;
+        }
+    }
 }
