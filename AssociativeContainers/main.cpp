@@ -12,7 +12,8 @@ using std::endl;
 #define delimiter "\n-------------------------------------\n"
 
 // Функция для загрузки данных из файла
-void loadDatabase(std::map<std::string, std::vector<std::string>>& db, const std::string& filename) {
+void loadDatabase(std::map<std::string, std::vector<std::string>>& db, const std::string& filename)
+{
     std::ifstream file(filename);
     if (!file.is_open())
     {
@@ -35,7 +36,8 @@ void loadDatabase(std::map<std::string, std::vector<std::string>>& db, const std
 }
 
 // Функция для сохранения данных в файл
-void saveDatabase(const std::map<std::string, std::vector<std::string>>& db, const std::string& filename) {
+void saveDatabase(const std::map<std::string, std::vector<std::string>>& db, const std::string& filename)
+{
     std::ofstream file(filename);
     if (!file.is_open())
     {
@@ -88,7 +90,8 @@ void openFile(const std::string& filename) {
 }
 
 // Функция для удаления правонарушения по номеру автомобиля
-void removeViolation(std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& filename) {
+void removeViolation(std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& filename)
+{
     auto it = db.find(plate);
     if (it != db.end())
     {
