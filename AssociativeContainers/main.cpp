@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<map>
 #include<vector>
 #include<string>
@@ -11,12 +11,12 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n-------------------------------------\n"
 
-// Функция для загрузки данных из файла
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р°
 void loadDatabase(std::map<std::string, std::vector<std::string>>& db, const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open())
     {
-        std::cout << "Не удалось открыть файл для чтения." << std::endl;
+        std::cout << "РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ." << std::endl;
         return;
     }
 
@@ -34,12 +34,12 @@ void loadDatabase(std::map<std::string, std::vector<std::string>>& db, const std
     file.close();
 }
 
-// Функция для сохранения данных в файл
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»
 void saveDatabase(const std::map<std::string, std::vector<std::string>>& db, const std::string& filename) {
     std::ofstream file(filename);
     if (!file.is_open())
     {
-        std::cout << "Не удалось открыть файл для записи." << std::endl;
+        std::cout << "РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё." << std::endl;
         return;
     }
     for (const auto& entry : db)
@@ -49,33 +49,33 @@ void saveDatabase(const std::map<std::string, std::vector<std::string>>& db, con
         {
             file << violation << std::endl;
         }
-        file << "---" << std::endl; // Разделитель для каждого автомобиля
+        file << "---" << std::endl; // Р Р°Р·РґРµР»РёС‚РµР»СЊ РґР»СЏ РєР°Р¶РґРѕРіРѕ Р°РІС‚РѕРјРѕР±РёР»СЏ
     }
     file.close();
 }
 
-// Функция для вывода всех данных
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° РІСЃРµС… РґР°РЅРЅС‹С…
 void printDatabase(const std::map<std::string, std::vector<std::string>>& db)
 {
     if (db.empty())
     {
-        std::cout << "База данных пуста." << std::endl;
+        std::cout << "Р‘Р°Р·Р° РґР°РЅРЅС‹С… РїСѓСЃС‚Р°." << std::endl;
         return;
     }
-    std::cout << delimiter << "Все данные в базе нарушений:" << std::endl;
+    std::cout << delimiter << "Р’СЃРµ РґР°РЅРЅС‹Рµ РІ Р±Р°Р·Рµ РЅР°СЂСѓС€РµРЅРёР№:" << std::endl;
     for (const auto& entry : db)
     {
-        std::cout << "Автомобиль с номером: " << entry.first << std::endl;
+        std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј: " << entry.first << std::endl;
         for (const auto& violation : entry.second)
         {
-            std::cout << tab << "Нарушение: " << violation << std::endl;
+            std::cout << tab << "РќР°СЂСѓС€РµРЅРёРµ: " << violation << std::endl;
         }
     }
 }
 
-// Функция для открытия файла
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
 void openFile(const std::string& filename) {
-    // Открываем файл с использованием системной команды в зависимости от ОС
+    // РћС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј СЃРёСЃС‚РµРјРЅРѕР№ РєРѕРјР°РЅРґС‹ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РћРЎ
 #ifdef _WIN32
     system(("start " + filename).c_str());
 #elif __APPLE__
@@ -83,43 +83,43 @@ void openFile(const std::string& filename) {
 #elif __linux__
     system(("xdg-open " + filename).c_str());
 #else
-    std::cout << "Открытие файла не поддерживается на этой ОС." << std::endl;
+    std::cout << "РћС‚РєСЂС‹С‚РёРµ С„Р°Р№Р»Р° РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РЅР° СЌС‚РѕР№ РћРЎ." << std::endl;
 #endif
 }
 
-// Функция для удаления правонарушения по номеру автомобиля
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ РїРѕ РЅРѕРјРµСЂСѓ Р°РІС‚РѕРјРѕР±РёР»СЏ
 void removeViolation(std::map<std::string, std::vector<std::string>>& db, const std::string& plate, const std::string& filename) {
     auto it = db.find(plate);
     if (it != db.end())
     {
-        std::cout << "Список правонарушений для автомобиля с номером " << plate << ":" << std::endl;
+        std::cout << "РЎРїРёСЃРѕРє РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёР№ РґР»СЏ Р°РІС‚РѕРјРѕР±РёР»СЏ СЃ РЅРѕРјРµСЂРѕРј " << plate << ":" << std::endl;
         for (size_t i = 0; i < it->second.size(); ++i)
         {
             std::cout << i + 1 << ". " << it->second[i] << std::endl;
         }
 
-        std::cout << "Введите номер правонарушения, которое хотите удалить: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ: ";
         size_t index;
         std::cin >> index;
 
         if (index > 0 && index <= it->second.size())
         {
-            it->second.erase(it->second.begin() + index - 1); // Удаление выбранного нарушения
+            it->second.erase(it->second.begin() + index - 1); // РЈРґР°Р»РµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РЅР°СЂСѓС€РµРЅРёСЏ
             if (it->second.empty())
             {
-                db.erase(it); // Если больше нет нарушений, удаляем запись об автомобиле
+                db.erase(it); // Р•СЃР»Рё Р±РѕР»СЊС€Рµ РЅРµС‚ РЅР°СЂСѓС€РµРЅРёР№, СѓРґР°Р»СЏРµРј Р·Р°РїРёСЃСЊ РѕР± Р°РІС‚РѕРјРѕР±РёР»Рµ
             }
-            saveDatabase(db, filename); // Сохраняем изменения
-            std::cout << "Правонарушение удалено и база данных обновлена." << std::endl;
+            saveDatabase(db, filename); // РЎРѕС…СЂР°РЅСЏРµРј РёР·РјРµРЅРµРЅРёСЏ
+            std::cout << "РџСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ СѓРґР°Р»РµРЅРѕ Рё Р±Р°Р·Р° РґР°РЅРЅС‹С… РѕР±РЅРѕРІР»РµРЅР°." << std::endl;
         }
         else
         {
-            std::cout << "Неверный индекс. Попробуйте снова." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РёРЅРґРµРєСЃ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << std::endl;
         }
     }
     else
     {
-        std::cout << "Автомобиль с номером " << plate << " не найден." << std::endl;
+        std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј " << plate << " РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
     }
 }
 
@@ -140,7 +140,7 @@ int main() {
             {
                 db[plate] = std::vector<std::string>{ violation };
             }
-            saveDatabase(db, filename); // Автосохранение после добавления
+            saveDatabase(db, filename); // РђРІС‚РѕСЃРѕС…СЂР°РЅРµРЅРёРµ РїРѕСЃР»Рµ РґРѕР±Р°РІР»РµРЅРёСЏ
         };
 
     int choice = 0;
@@ -148,39 +148,39 @@ int main() {
     while (true)
     {
         std::cout << delimiter;
-        std::cout << "Выберите действие:\n";
-        std::cout << "1. Добавить правонарушение\n";
-        std::cout << "2. Проверить правонарушения по номеру автомобиля\n";
-        std::cout << "3. Открыть и просмотреть все сохранённые данные\n";
-        std::cout << "4. Удалить правонарушение\n";
-        std::cout << "5. Открыть файл с нарушениями\n";
-        std::cout << "6. Сохранить данные и выйти\n";
-        std::cout << "Ваш выбор: ";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\n";
+        std::cout << "1. Р”РѕР±Р°РІРёС‚СЊ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ\n";
+        std::cout << "2. РџСЂРѕРІРµСЂРёС‚СЊ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ РїРѕ РЅРѕРјРµСЂСѓ Р°РІС‚РѕРјРѕР±РёР»СЏ\n";
+        std::cout << "3. РћС‚РєСЂС‹С‚СЊ Рё РїСЂРѕСЃРјРѕС‚СЂРµС‚СЊ РІСЃРµ СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ РґР°РЅРЅС‹Рµ\n";
+        std::cout << "4. РЈРґР°Р»РёС‚СЊ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ\n";
+        std::cout << "5. РћС‚РєСЂС‹С‚СЊ С„Р°Р№Р» СЃ РЅР°СЂСѓС€РµРЅРёСЏРјРё\n";
+        std::cout << "6. РЎРѕС…СЂР°РЅРёС‚СЊ РґР°РЅРЅС‹Рµ Рё РІС‹Р№С‚Рё\n";
+        std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
         std::cin >> choice;
 
         if (choice == 1)
         {
             std::string plate, violation;
-            std::cout << "Введите номер автомобиля: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ: ";
             std::cin >> plate;
 
-            std::cout << "Введите правонарушение: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ: ";
             std::cin.ignore();
             std::getline(std::cin, violation);
 
             addViolation(trafficDatabase, plate, violation, filename);
-            std::cout << "Данные добавлены и сохранены!" << std::endl;
+            std::cout << "Р”Р°РЅРЅС‹Рµ РґРѕР±Р°РІР»РµРЅС‹ Рё СЃРѕС…СЂР°РЅРµРЅС‹!" << std::endl;
         }
         else if (choice == 2)
         {
             std::string searchPlate;
-            std::cout << "Введите номер автомобиля для поиска: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ РґР»СЏ РїРѕРёСЃРєР°: ";
             std::cin >> searchPlate;
 
             auto it = trafficDatabase.find(searchPlate);
             if (it != trafficDatabase.end())
             {
-                std::cout << "Автомобиль с номером " << searchPlate << " имеет следующие правонарушения:" << std::endl;
+                std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј " << searchPlate << " РёРјРµРµС‚ СЃР»РµРґСѓСЋС‰РёРµ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ:" << std::endl;
                 for (const auto& violation : it->second)
                 {
                     std::cout << "- " << violation << std::endl;
@@ -188,7 +188,7 @@ int main() {
             }
             else
             {
-                std::cout << "Автомобиль с номером " << searchPlate << " не найден." << std::endl;
+                std::cout << "РђРІС‚РѕРјРѕР±РёР»СЊ СЃ РЅРѕРјРµСЂРѕРј " << searchPlate << " РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
             }
         }
         else if (choice == 3)
@@ -198,7 +198,7 @@ int main() {
         else if (choice == 4)
         {
             std::string plate;
-            std::cout << "Введите номер автомобиля, для которого нужно удалить правонарушение: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РЅСѓР¶РЅРѕ СѓРґР°Р»РёС‚СЊ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ: ";
             std::cin >> plate;
 
             removeViolation(trafficDatabase, plate, filename);
@@ -210,12 +210,12 @@ int main() {
         else if (choice == 6)
         {
             saveDatabase(trafficDatabase, filename);
-            std::cout << "Данные сохранены. Выход из программы." << std::endl;
+            std::cout << "Р”Р°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹. Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹." << std::endl;
             break;
         }
         else
         {
-            std::cout << "Неверный выбор. Попробуйте снова." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << std::endl;
         }
     }
 }
