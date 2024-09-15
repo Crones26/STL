@@ -123,7 +123,8 @@ void removeViolation(std::map<std::string, std::vector<std::string>>& db, const 
     }
 }
 
-int main() {
+int main() 
+{
     setlocale(LC_ALL, "");
 
     std::map<std::string, std::vector<std::string>> trafficDatabase;
