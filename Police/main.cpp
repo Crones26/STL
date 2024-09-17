@@ -129,7 +129,6 @@ void removeViolation(std::map<std::string, std::vector<Crime>>& db, const std::s
         int index = 1;
         for (const auto& crime : it->second)
         {
-            // Выводим правонарушение в одну строку
             std::cout << index++ << ". " << crime << std::endl;
         }
 
