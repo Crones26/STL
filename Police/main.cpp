@@ -1,8 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <fstream>
-#include <conio.h>
-#include <map>
+#include<iostream>
+#include<fstream>
+#include<conio.h>
+#include<map>
 #include<ctime>
 #include<string>
 #include<list>
@@ -106,16 +106,21 @@ public:
 	}
 
 	//				Constructors:
-	Crime(int violation_id, const std::string& place, const std::string& time)
+	Crime
+	(
+		int violation_id,
+		const std::string& place,
+		const std::string& time
+	)
 	{
 		this->time = {};
-		set_violation_id(violation_id);
-		set_place(place);
-		set_time(time);
+		this->set_violation_id(violation_id);
+		this->set_place(place);
+		this->set_time(time);
 #ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
 #endif // DEBUG
-	}
+}
 	~Crime()
 	{
 #ifdef DEBUG
@@ -126,23 +131,16 @@ public:
 
 std::ostream& operator<<(std::ostream& os, const Crime& obj)
 {
-	return os << obj.get_time() << ":\t " << obj.get_place() << " - " << obj.get_violation();
-}
-std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj)
-{
-	ofs << obj.get_time() << ":\t " << obj.get_place() << " - " << obj.get_violation();
-	return ofs;
+	return os << obj.get_time() << ":\t" << obj.get_place() << " - " << obj.get_violation();
 }
 
 void print(const std::map<std::string, std::list<Crime>>& base);
-void save(const std::map<std::string, std::list<Crime>>& base, const std::string& file);
-void load(std::map<std::string, std::list<Crime>>& base, const std::string file);
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename);
 
 void main()
-{
-	setlocale(LC_ALL, "");
-	/*Crime crime(1, "Ул. Ленина", "18:10 1.09.2024");
+{	/*Crime crime(1, "Ул. Ленина", "18:10 1.09.2024");
 	cout << crime << endl;*/
+	setlocale(LC_ALL, "");
 	std::map<std::string, std::list<Crime>> base =
 	{
 		{"a777bb", {Crime(1, "Ул. Ленина", "18:10 1.09.2024"), Crime(2, "пл. Свободы", "12:25 20.08.2024")}},
@@ -150,51 +148,16 @@ void main()
 		{"a001aa", {Crime(10, "Ул. Пролетарская", "21:50 1.08.2024"), Crime(9, "Ул. Пролетарская", "21:51 1.08.2024"), Crime(11, "Ул. Пролетарская", "21:51 1.08.2024"), Crime(12, "Ул. Пролетарская", "22:05 1.08.2024")}},
 	};
 
-	//print(base);
-	//load(base, "base.txt");
 	print(base);
 	save(base, "base.txt");
 }
 
-void save(const std::map<std::string, std::list<Crime>>& base, const std::string& file)
-{
-	std::ofstream fout(file);
-	for (std::map<std::string, std::list<Crime>>::const_iterator it = base.begin(); it != base.end(); ++it)
-	{
-		fout << it->first << ":\n";
-		for (std::list<Crime>::const_iterator const_it = it->second.begin(); const_it != it->second.end(); ++const_it)
-		{
-			fout << "\t" << *const_it << endl;
-		}
-		fout << endl;
-	}
-	fout.close();
-	std::string command = "notepad ";
-	command += file;
-	system(command.c_str());
-}
-void load(std::map<std::string, std::list<Crime>>& base, const std::string file)
-{
-	std::ifstream fin(file);
-	if (fin.is_open())
-	{
-		while (!fin.eof())
-		{
-			const int SIZE = 1024;
-			char buffer[SIZE]{};
-			fin.getline(buffer, SIZE);
-			cout << buffer << endl;
-		}
-		fin.close();
-	}
-	else
-	{
-		std::cerr << "Error: file is not found!" << endl;
-	}
-}
 void print(const std::map<std::string, std::list<Crime>>& base)
 {
-	for (std::map<std::string, std::list<Crime>>::const_iterator map_it = base.begin(); map_it != base.end(); ++map_it)
+	cout << delimiter << endl;
+	for (std::map<std::string, std::list<Crime>>::const_iterator map_it = base.begin();
+		map_it != base.end();
+		++map_it)
 	{
 		cout << map_it->first << ":\n";
 		for (std::list<Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
@@ -203,4 +166,24 @@ void print(const std::map<std::string, std::list<Crime>>& base)
 		}
 		cout << delimiter << endl;
 	}
+}
+
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename)
+{
+	std::ofstream fout(filename);
+	fout << delimiter << endl;
+	for (std::map<std::string, std::list<Crime>>::const_iterator map_it = base.begin();
+		map_it != base.end();
+		++map_it)
+	{
+		fout << map_it->first << ":\n";
+		for (std::list<Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
+		{
+			fout << "\t" << *it << endl;
+		}
+		fout << delimiter << endl;
+	}
+	fout.close();
+	std::string command = "notepad " + filename;
+	system(command.c_str());
 }
