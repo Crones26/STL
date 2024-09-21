@@ -35,8 +35,8 @@ using std::endl;
 
 const std::map<int, std::string>MENU_ITEMS =
 {
-	{1, "Загрузить базу из файла"},
-	{2, "Сохранить базу в файл"},
+	{1, "Сохранить базу в файл"},
+	{2, "Загрузить базу из файла"},
 	{3, "Вывести базу на экран"},
 	{4, "Добавить нарушение"},
 	{5, "Вывести информацию по номеру"},
@@ -194,8 +194,10 @@ int menu();
 void print(const std::map<std::string, std::list<Crime>>& base);
 void save(const std::map<std::string, std::list<Crime>>& base, const std::string filename);
 std::map<std::string, std::list<Crime>> load(const std::string& filename);
+void add_violation(std::map<std::string, std::list<Crime>>& base);
+void find_violation(const std::map<std::string, std::list<Crime>>& base);
 
-void main()
+int main()
 {
 	setlocale(LC_ALL, "");
 
@@ -218,12 +220,12 @@ void main()
 	{
 		switch (menu())
 		{
-		case 0: return;
-		case 1: base = load("base.txt");
-		case 2: save(base, "base.txt");
-		case 3: print(base);
-		case 4: cout << "soon" << endl;
-		case 5: cout << "soon" << endl;
+		case 0: return 0;
+		case 1: save(base, "base.txt"); break;
+		case 2: base = load("base.txt"); break;
+		case 3: print(base); break;
+		case 4: add_violation(base); break;
+		case 5: find_violation(base); break;
 		}
 	} while (true);
 }
@@ -340,4 +342,44 @@ std::map<std::string, std::list<Crime>> load(const std::string& filename)
 		std::cerr << "Error: file not found" << endl;
 	}
 	return base;
+}
+
+void add_violation(std::map<std::string, std::list<Crime>>& base)
+{
+	std::string plate, place, time;
+	int violation_id;
+
+	cout << "Введите номер автомобиля: ";
+	cin >> plate;
+	cin.ignore();  // Очистка буфера после ввода строки
+	cout << "Введите место нарушения: ";
+	std::getline(cin, place);  // Используем getline для ввода строки с пробелами
+	cout << "Введите время нарушения (формат ЧЧ:ММ ДД.ММ.ГГГГ): ";
+	std::getline(cin, time);  // Используем getline, чтобы корректно обрабатывать ввод с пробелами
+	cout << "Введите номер нарушения: ";
+	cin >> violation_id;
+	cin.ignore();  // Очистка буфера после ввода числа
+
+	base[plate].emplace_back(violation_id, place, time);
+}
+
+void find_violation(const std::map<std::string, std::list<Crime>>& base)
+{
+	std::string plate;
+	cout << "Введите номер автомобиля: ";
+	cin >> plate;
+
+	auto it = base.find(plate);
+	if (it != base.end())
+	{
+		for (const auto& crime : it->second)
+		{
+			cout << crime << endl;
+		}
+	}
+	else
+	{
+		cout << "Нарушений для данного номера не найдено." << endl;
+	}
+	system("PAUSE");
 }
