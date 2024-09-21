@@ -176,10 +176,11 @@ void main()
 
 	};
 
-	//base = load("base.txt");
-	print(base);
+	base = load("base.txt");
+	//print(base);
 	//save(base, "base.txt");
 	std::map<std::string, std::list<Crime>> crime_map = load("base.txt");
+	//print(crime_map);
 	std::string command = "notepad base.txt";
 	system(command.c_str());
 }
@@ -223,6 +224,7 @@ std::map<std::string, std::list<Crime>> load(const std::string& file)
 			char* sz_buffer = new char[crimes_str.size() + 1];
 			strcpy(sz_buffer, crimes_str.c_str());
 			char delimiters[] = ",";
+
 			for (char* pch = strtok(sz_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 			{
 				std::string s_crime(pch);
