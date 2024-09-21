@@ -3,11 +3,12 @@
 #include <fstream>
 #include <conio.h>
 #include <map>
-#include<ctime>
-#include<string>
-#include<sstream>
-#include<list>
-#include<sstream>
+#include <ctime>
+#include <string>
+#include <sstream>
+#include <list>
+#include <sstream>
+#include <cstring>
 
 using std::cin;
 using std::cout;
@@ -159,7 +160,6 @@ std::istream& operator>>(std::istream& is, Crime& obj)
 }
 void print(const std::map<std::string, std::list<Crime>>& base);
 void save(const std::map<std::string, std::list<Crime>>& base, const std::string& file);
-//void load(std::map<std::string, std::list<Crime>>& base, const std::string file);
 std::map<std::string, std::list<Crime>> load(const std::string& file);
 
 void main()
@@ -167,17 +167,21 @@ void main()
 	setlocale(LC_ALL, "");
 	/*Crime crime(1, "Ул. Ленина", "18:10 1.09.2024");
 	cout << crime << endl;*/
+
 	std::map<std::string, std::list<Crime>> base 
 	{
 		{"a777bb", {Crime(1, "Ул. Ленина", "18:10 1.09.2024"), Crime(2, "пл. Свободы", "12:25 20.08.2024")}},
 		{"a000bb", {Crime(6, "Ул. Космонавтов", "17:50 1.08.2024"), Crime(8, "ул. Космонавтов", "17:45 01.08.2024")}},
 		{"a001aa", {Crime(10, "Ул. Пролетарская", "21:50 1.08.2024"), Crime(9, "Ул. Пролетарская", "21:51 1.08.2024"), Crime(11, "Ул. Пролетарская", "21:51 1.08.2024"), Crime(12, "Ул. Пролетарская", "22:05 1.08.2024")}},
+
 	};
 
-	//print(base);
-	//load(base, "base.txt");
+	//base = load("base.txt");
 	print(base);
-	auto crime_map = load("base.txt");
+	//save(base, "base.txt");
+	std::map<std::string, std::list<Crime>> crime_map = load("base.txt");
+	std::string command = "notepad base.txt";
+	system(command.c_str());
 }
 
 void save(const std::map<std::string, std::list<Crime>>& base, const std::string& file)
@@ -196,6 +200,7 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 		fout << endl;
 	}
 	fout.close();
+
 	std::string command = "notepad ";
 	command += file;
 	system(command.c_str());
@@ -203,33 +208,40 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 
 std::map<std::string, std::list<Crime>> load(const std::string& file)
 {
-    std::map<std::string, std::list<Crime>> base;
-    std::ifstream fin(file);
+	std::map<std::string, std::list<Crime>> base;
+	std::ifstream fin(file);
+	
+	if (fin.is_open())
+	{
+		std::string licence_plate;
+		while (std::getline(fin, licence_plate, ':'))
+		{
+			std::list<Crime> crimes;
+			std::string crimes_str;
+			std::getline(fin, crimes_str);
 
-    if (fin.is_open())
-    {
-        while (!fin.eof())
-        {
-            std::string license_plate;
-            std::getline(fin, license_plate, ':');
-            if (license_plate.empty()) continue;
+			char* sz_buffer = new char[crimes_str.size() + 1];
+			strcpy(sz_buffer, crimes_str.c_str());
+			char delimiters[] = ",";
+			for (char* pch = strtok(sz_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+			{
+				std::cout << pch << "\t";
+				std::string s_crime(pch);
+				std::stringstream ss_crime(s_crime, std::ios_base::in | std::ios_base::out);
+				Crime crime(0, "place", "00:00 01.01.2000");
+				ss_crime >> crime;
+				crimes.push_back(crime);
+			}
+			delete[] sz_buffer;
 
-            std::string crimes;
-            std::getline(fin, crimes);
-            std::stringstream ss(crimes);
-
-            while (!ss.eof())
-            {
-                Crime crime(0, "place", "00:00 01.01.2000");
-                ss >> crime;
-                base[license_plate].push_back(crime);
-            }
-        }
-        fin.close();
-    }
+			base[licence_plate] = crimes;
+		}
+	}
+	else
 	{
 		std::cerr << "Error: file not found" << endl;
 	}
+
 	return base;
 }
 
