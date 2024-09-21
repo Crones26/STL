@@ -1,5 +1,7 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
+#include<Windows.h>
+#include<iostream>
 #include<fstream>
 #include<string>
 #include<conio.h>
@@ -20,18 +22,25 @@ using std::endl;
 #define Enter       13
 #define Escape      27
 
-const char* MENU_ITEMS[] =
+//const char* MENU_ITEMS[] =
+//{
+//	"1. Загрузить базу из файла",
+//	"2. Сохранить базу в файл",
+//	"3. Вывести базу на экран",
+//	"4. Вывести информацию по номеру",
+//	"5. Добавить нарушение",
+//};
+//
+//const int MENU_SIZE = sizeof(MENU_ITEMS) / sizeof(MENU_ITEMS[0]);
+
+const std::map<int, std::string>MENU_ITEMS =
 {
-	"1. Загрузить базу из файла",
-	"2. Сохранить базу в файл",
-	"3. Вывести базу на экран",
-	"4. Вывести информацию по номеру",
-	"5. Добавить нарушение",
+	{1, "Загрузить базу из файла"},
+	{2, "Сохранить базу в файл"},
+	{3, "Вывести базу на экран"},
+	{4, "Добавить нарушение"},
+	{5, "Вывести информацию по номеру"},
 };
-
-const int MENU_SIZE = sizeof(MENU_ITEMS) / sizeof(MENU_ITEMS[0]);
-
-//const std::map
 
 const std::map<int, std::string> VIOLATIONS =
 {
@@ -106,16 +115,22 @@ public:
 	}
 	void set_time(const std::string& time)
 	{
+		//1. Создаем временую строку для того, чтобы пропарсить полученную строку 
 		char* time_buffer = new char[time.size() + 1] {};
+		//2. Копируем полученную строку в буфер:
 		strcpy(time_buffer, time.c_str());
+		//Функция strcpy(dst, src); копирует содержимое строки-источника в строку получателя
 
+		//3. Создаем массив для хранения элементов времени
 		int time_elements[5]{};
 		int i = 0;
 		char delimiters[] = ":./ ";
 		for (char* pch = strtok(time_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 			time_elements[i++] = std::atoi(pch);
+		//Функция std::atoi() 'ASCII-string to int' преобразует строку в целое число.
 		delete[] time_buffer;
 
+		//4. Сохраняем элементы времени в структуру 'tm':
 		this->time.tm_hour = time_elements[0];
 		this->time.tm_min = time_elements[1];
 		this->time.tm_mday = time_elements[2];
@@ -194,44 +209,56 @@ void main()
 		{"a001аа", {Crime(10, "ул. Пролетарская", "21:50 1.08.2024"), Crime(9,"ул. Пролетарская", "21:50 1.08.2024"), Crime(11,"ул. Пролетарская", "21:50 1.08.2024"), Crime(12,"ул. Пролетарская", "22:05 1.08.2024")}},
 	};  */
 
-	std::map<std::string, std::list<Crime>> base = load("base.txt");
-	print(base);
+	//print(base);
 	//save(base, "base.txt");
+
+	std::map<std::string, std::list<Crime>> base = load("base.txt");
 
 	do
 	{
-		switch (menu());
+		switch (menu())
 		{
-
+		case 0: return;
+		case 1: base = load("base.txt");
+		case 2: save(base, "base.txt");
+		case 3: print(base);
+		case 4: cout << "soon" << endl;
+		case 5: cout << "soon" << endl;
 		}
 	} while (true);
 }
 
 int menu()
 {
-	int selected_item = 0;
+	int selected_item = 1;
 	char key;
 	do
 	{
 		system("CLS");
-		for (int i = 0; i < MENU_SIZE; i++)
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		for (int i = 1; i <= MENU_ITEMS.size(); i++)
 		{
 			cout << (i == selected_item ? "[" : " ");
+			cout << i << ". ";
 			cout.width(32);
 			cout << std::left;
-			cout << MENU_ITEMS[i];
-			cout << (i == selected_item ? "]" : " ");
+			if (i == selected_item)SetConsoleTextAttribute(hConsole, 0x70);
+			cout << MENU_ITEMS.at(i);
+			SetConsoleTextAttribute(hConsole, 0x07);
+			cout << (i == selected_item ? "  ]" : " ");
 			cout << endl;
 		}
 		key = _getch();
 
 		switch (key)
 		{
-		case UP_ARROW: if (selected_item > 0)selected_item--; break;
-		case DOWN_ARROW: if (selected_item < MENU_SIZE - 1)selected_item++; break;
-		case Enter: return selected_item + 1;
+		case UP_ARROW: /*if (selected_item > 1)*/selected_item--; break;
+		case DOWN_ARROW: /*if (selected_item < MENU_ITEMS.size())*/selected_item++; break;
+		case Enter: return selected_item;
 		case Escape: return 0;
 		}
+		if (selected_item == MENU_ITEMS.size() + 1)selected_item = 1;
+		if (selected_item == 0)selected_item = MENU_ITEMS.size();
 	} while (key != Escape);
 	return 0;
 }
@@ -251,6 +278,7 @@ void print(const std::map<std::string, std::list<Crime>>& base)
 		cout << delimiter << endl;
 	}
 	cout << "Количество номеров в базе: " << base.size() << endl;
+	system("PAUSE");
 }
 
 void save(const std::map<std::string, std::list<Crime>>& base, const std::string filename)
@@ -266,7 +294,8 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 		{
 			fout << *it << ",";
 		}
-		//fout.seekp(-1, std::ios::cur);
+		//fout.seekp(-1, std::ios::cur); //Метод seekp(offset, direction) задает позицию курсора записи (p - put)
+		// -1 - смещение  на 1 символ обратно, std::ios::cur - показывает что смещение производится от текущей позиции курсора
 		//fout << ";\n";
 		fout << endl;
 	}
