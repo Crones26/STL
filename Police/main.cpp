@@ -224,12 +224,12 @@ std::map<std::string, std::list<Crime>> load(const std::string& file)
 			char* sz_buffer = new char[crimes_str.size() + 1];
 			strcpy(sz_buffer, crimes_str.c_str());
 			char delimiters[] = ",";
-
+			Crime crime(0, "place", "00:00 01.01.2000");
 			for (char* pch = strtok(sz_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 			{
 				std::string s_crime(pch);
 				std::stringstream ss_crime(s_crime, std::ios_base::in | std::ios_base::out);
-				Crime crime(0, "place", "00:00 01.01.2000");
+				
 				ss_crime >> crime;
 				crimes.push_back(crime);
 			}
