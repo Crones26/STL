@@ -377,7 +377,7 @@ void add_violation(std::map<std::string, std::list<Crime>>& base)
 	cin >> violation_id;
 	cin.ignore();  // Очистка буфера после ввода числа
 
-	base[plate].emplace_back(violation_id, place, time);
+	base[plate].push_back(Crime(violation_id, place, time));
 }
 
 void find_violation(const std::map<std::string, std::list<Crime>>& base)
