@@ -368,14 +368,12 @@ void add_violation(std::map<std::string, std::list<Crime>>& base)
 
 	cout << "Введите номер автомобиля: (например: a000aa)";
 	cin >> plate;
-	cin.ignore();  // Очистка буфера после ввода строки
 	cout << "Введите место нарушения: (например: Ул. Ленина)";
 	std::getline(cin, place);  // Используем getline для ввода строки с пробелами
 	cout << "Введите время нарушения (формат ЧЧ:ММ ДД.ММ.ГГГГ): ";
 	std::getline(cin, time);  // Используем getline, чтобы корректно работал ввод с пробелами
 	cout << "Введите номер нарушения: (от 1 до 16)";
 	cin >> violation_id;
-	cin.ignore();  // Очистка буфера после ввода числа
 
 	base[plate].push_back(Crime(violation_id, place, time));
 }
