@@ -367,9 +367,15 @@ void add_violation(std::map<std::string, std::list<Crime>>& base)
 	int violation_id;
 
 	cout << "Введите номер автомобиля: (например: a000aa)";
+	SetConsoleCP(1251);
 	cin >> plate;
+	SetConsoleCP(866);
+	cin.clear();
+	cin.ignore();
 	cout << "Введите место нарушения: (например: Ул. Ленина)";
+	SetConsoleCP(1251);
 	std::getline(cin, place);  // Используем getline для ввода строки с пробелами
+	SetConsoleCP(866);
 	cout << "Введите время нарушения (формат ЧЧ:ММ ДД.ММ.ГГГГ): ";
 	std::getline(cin, time);  // Используем getline, чтобы корректно работал ввод с пробелами
 	cout << "Введите номер нарушения: (от 1 до 16)";
