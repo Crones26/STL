@@ -197,7 +197,7 @@ std::map<std::string, std::list<Crime>> load(const std::string& filename);
 void add_violation(std::map<std::string, std::list<Crime>>& base);
 void find_violation(const std::map<std::string, std::list<Crime>>& base);
 
-int main()
+void main()
 {
 	setlocale(LC_ALL, "");
 
@@ -220,7 +220,7 @@ int main()
 	{
 		switch (menu())
 		{
-		case 0: return 0;
+		case 0: return;
 		case 1: save(base, "base.txt"); break;
 		case 2: base = load("base.txt"); break;
 		case 3: print(base); break;
@@ -344,19 +344,36 @@ std::map<std::string, std::list<Crime>> load(const std::string& filename)
 	return base;
 }
 
+//void add_violation(std::map<std::string, std::list<Crime>>& base)
+//{
+//	std::string plate, place, time;
+//	int violation_id;
+// 
+//	cout << "Введите номер автомобиля: (например: a000aa)";
+//	cin >> plate;
+//	cout << "Введите место нарушения: (например: Ул. Ленина)";
+//	cin >> place;
+//	cout << "Введите время нарушения (формат ЧЧ:ММ ДД.ММ.ГГГГ): ";
+//	cin >> time;
+//	cout << "Введите номер нарушения: (от 1 до 16)";
+//	cin >> violation_id;
+//
+//	base[plate].emplace_back(violation_id, place, time);
+//}
+
 void add_violation(std::map<std::string, std::list<Crime>>& base)
 {
 	std::string plate, place, time;
 	int violation_id;
 
-	cout << "Введите номер автомобиля: ";
+	cout << "Введите номер автомобиля: (например: a000aa)";
 	cin >> plate;
 	cin.ignore();  // Очистка буфера после ввода строки
-	cout << "Введите место нарушения: ";
+	cout << "Введите место нарушения: (например: Ул. Ленина)";
 	std::getline(cin, place);  // Используем getline для ввода строки с пробелами
 	cout << "Введите время нарушения (формат ЧЧ:ММ ДД.ММ.ГГГГ): ";
-	std::getline(cin, time);  // Используем getline, чтобы корректно обрабатывать ввод с пробелами
-	cout << "Введите номер нарушения: ";
+	std::getline(cin, time);  // Используем getline, чтобы корректно работал ввод с пробелами
+	cout << "Введите номер нарушения: (от 1 до 16)";
 	cin >> violation_id;
 	cin.ignore();  // Очистка буфера после ввода числа
 
@@ -369,12 +386,12 @@ void find_violation(const std::map<std::string, std::list<Crime>>& base)
 	cout << "Введите номер автомобиля: ";
 	cin >> plate;
 
-	auto it = base.find(plate);
+	std::map<std::string, std::list<Crime>>::const_iterator it = base.find(plate);
 	if (it != base.end())
 	{
-		for (const auto& crime : it->second)
+		for (std::list<Crime>::const_iterator crime = it->second.begin(); crime != it->second.end(); ++crime)
 		{
-			cout << crime << endl;
+			cout << *crime << endl;
 		}
 	}
 	else
